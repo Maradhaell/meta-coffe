@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUANG SEDUH — A Little Pause, A Better Day</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config={theme:{extend:{
+  colors:{ivory:'#FAF6EF',cream:'#F1E8D8',espresso:'#211712',espresso2:'#3A2A20',caramel:'#B7792B',caramelLight:'#E8C88A',terra:'#B85C38',sage:'#6B7F5E',line:'#E9DFCE'},
+  fontFamily:{serif:['Fraunces','serif'],sans:['Inter','sans-serif'],manrope:['Manrope','sans-serif']},
+  boxShadow:{soft:'0 20px 40px rgba(33,23,18,0.08)',card:'0 8px 24px rgba(33,23,18,0.06)'}
+}}}
+</script>
+<style>
+html{scroll-behavior:smooth}
+body{background:#FAF6EF;color:#211712;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased}
+.hero-bg{background:linear-gradient(90deg,rgba(33,23,18,.88) 0%,rgba(33,23,18,.72) 48%,rgba(33,23,18,.28) 100%),url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1800&q=80') center/cover}
+.hide{display:none!important}
+.card{transition:.35s} .card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(33,23,18,.10)} .card img{transition:.7s} .card:hover img{transform:scale(1.05)}
+.nav-link{position:relative} .nav-link:after{content:'';position:absolute;left:0;bottom:-5px;width:0;height:2px;background:#B7792B;transition:.3s} .nav-link:hover:after{width:100%}
+.chip.active{background:#211712;color:#fff;border-color:#211712}
+input,textarea{outline:none} input:focus{border-color:#B7792B!important;box-shadow:0 0 0 3px rgba(183,121,43,.12)}
+.lucide{stroke-width:1.8}
+.divider{height:1px;background:#E9DFCE}
+</style>
+</head>
+<body>
+
+<script>
+const CAFE={name:"RUANG SEDUH",wa:"6281234567890",address:"Jl. Slamet Riyadi No. 88, Solo, Jawa Tengah",hours:"Senin - Minggu • 08.00 - 22.00 WIB",email:"halo@ruangseduh.id",ig:"@ruangseduh",maps:"https://maps.google.com/?q=Solo"};
+const MENU=[
+{name:"Espresso",cat:"Coffee",price:18000,desc:"Single shot pekat, bold dan clean dengan crema tebal.",img:"https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=900&q=80",tag:"Best Seller"},
+{name:"Cappuccino",cat:"Coffee",price:28000,desc:"Espresso, steamed milk dan foam lembut yang seimbang.",img:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=900&q=80",tag:"Favorit"},
+{name:"Caramel Latte",cat:"Coffee",price:32000,desc:"Latte creamy dengan saus karamel buatan sendiri.",img:"https://images.unsplash.com/photo-1541167760496-1628856ab772?w=900&q=80",tag:""},
+{name:"Cold Brew",cat:"Coffee",price:30000,desc:"Diseduh 18 jam, smooth, manis alami dan low acidity.",img:"https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=900&q=80",tag:""},
+{name:"Matcha Latte",cat:"Non-Coffee",price:30000,desc:"Matcha premium Jepang, creamy dan tidak pahit.",img:"https://images.unsplash.com/photo-1536013455962-2b9d9a0a2e0a?w=900&q=80",tag:""},
+{name:"Choco Hazelnut",cat:"Non-Coffee",price:32000,desc:"Cokelat Belgia pekat dengan sentuhan hazelnut.",img:"https://images.unsplash.com/photo-1542990253-a781e04c0082?w=900&q=80",tag:""},
+{name:"Lychee Tea",cat:"Tea",price:26000,desc:"Teh melati segar dengan buah lychee asli.",img:"https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=900&q=80",tag:""},
+{name:"Earl Grey",cat:"Tea",price:24000,desc:"Black tea klasik dengan aroma bergamot yang lembut.",img:"https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?w=900&q=80",tag:""},
+{name:"Nasi Goreng Seduh",cat:"Main Course",price:45000,desc:"Nasi goreng smoked beef, telur mata sapi dan acar.",img:"https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=900&q=80",tag:"Best Seller"},
+{name:"Chicken Katsu Curry",cat:"Main Course",price:52000,desc:"Katsu renyah, kari Jepang gurih dan nasi hangat.",img:"https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=900&q=80",tag:""},
+{name:"Truffle Fries",cat:"Snacks",price:32000,desc:"Kentang renyah dengan truffle oil dan parmesan.",img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=900&q=80",tag:""},
+{name:"Croissant Butter",cat:"Snacks",price:25000,desc:"Croissant berlapis, buttery, flaky dan hangat.",img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=900&q=80",tag:""},
+{name:"Tiramisu",cat:"Dessert",price:35000,desc:"Klasik Italia, mascarpone lembut dan kopi espresso.",img:"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=900&q=80",tag:"Favorit"},
+{name:"Burnt Cheesecake",cat:"Dessert",price:38000,desc:"Creamy di dalam, caramelized sempurna di atas.",img:"https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=900&q=80",tag:""},
+];
+const GALLERY=[
+"https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&q=80",
+"https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=900&q=80",
+"https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=80",
+"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&q=80",
+"https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=900&q=80",
+"https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=900&q=80",
+"https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=900&q=80",
+"https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=900&q=80",
+];
+</script>
+
+<!-- TOP BAR -->
+<div class="bg-espresso text-white/90 text-[13px]">
+  <div class="max-w-7xl mx-auto px-5 h-[36px] flex items-center justify-between">
+    <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-caramelLight"></i> Solo, Jawa Tengah <span class="hidden sm:inline text-white/40">|</span> <span class="hidden sm:inline">Buka Setiap Hari 08.00 - 22.00</span></p>
+    <a href="#menu" class="flex items-center gap-1.5 font-semibold text-caramelLight">Lihat Promo Hari Ini <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<header class="sticky top-0 z-50 bg-ivory/95 backdrop-blur border-b border-line">
+  <div class="max-w-7xl mx-auto px-5 h-[76px] flex items-center justify-between">
+    <!-- LOGO SVG -->
+    <a href="#home" class="flex items-center gap-3">
+      <div class="w-[48px] h-[48px] shrink-0">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="31" fill="#211712"/>
+          <circle cx="32" cy="32" r="27.5" stroke="#E8C88A" stroke-width="1" stroke-dasharray="2 3"/>
+          <path d="M20 26h20v12a10 10 0 0 1-10 10h0a10 10 0 0 1-10-10V26Z" fill="#FAF6EF"/>
+          <path d="M40 28h2.5a4.5 4.5 0 0 1 0 9H40" stroke="#FAF6EF" stroke-width="2.2"/>
+          <path d="M26 20c0-2 2-2 2-4M32 20c0-2 2-2 2-4" stroke="#E8C88A" stroke-width="2" stroke-linecap="round"/>
+          <path d="M22 52h20" stroke="#B7792B" stroke-width="2.5" stroke-linecap="round"/>
+          <text x="32" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="15" font-weight="700" fill="#211712">R</text>
+        </svg>
+      </div>
+      <div class="leading-none">
+        <p class="font-serif font-bold text-[20px] tracking-[0.04em]">RUANG SEDUH</p>
+        <p class="text-[10px] tracking-[0.28em] text-caramel font-bold mt-1">COFFEE &nbsp;•&nbsp; EAT &nbsp;•&nbsp; PAUSE</p>
+      </div>
+    </a>
+    <nav class="hidden lg:flex gap-9 text-[14px] font-medium">
+      <a href="#home" class="nav-link">Home</a><a href="#about" class="nav-link">About Us</a><a href="#menu" class="nav-link">Our Menu</a><a href="#gallery" class="nav-link">Gallery</a><a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <div class="flex items-center gap-2.5">
+      <button onclick="openCart()" class="relative bg-white border border-line px-4 py-2.5 rounded-full text-sm font-semibold flex items-center gap-2"><i data-lucide="shopping-bag" class="w-4 h-4"></i><span class="hidden sm:inline">Keranjang</span><span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-terra text-white text-[11px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span></button>
+      <a href="#menu" class="hidden md:flex bg-espresso text-white px-5 py-2.5 rounded-full text-sm font-semibold items-center gap-2">Order Now <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+      <button onclick="document.getElementById('mobileMenu').classList.toggle('hide')" class="lg:hidden p-2"><i data-lucide="menu" class="w-6 h-6"></i></button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="hide lg:hidden bg-white border-t px-5 py-4 flex flex-col gap-3 font-medium text-[15px]">
+    <a href="#home">Home</a><a href="#about">About Us</a><a href="#menu">Our Menu</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="home" class="hero-bg text-white">
+  <div class="max-w-7xl mx-auto px-5 py-[64px] md:py-[96px]">
+    <div class="max-w-[680px]">
+      <span class="inline-flex items-center gap-2 bg-white/10 border border-white/20 backdrop-blur px-4 py-2 rounded-full text-[12px] tracking-[0.14em] font-semibold"><i data-lucide="sparkles" class="w-4 h-4 text-caramelLight"></i> SPECIALTY CAFE • SOLO • EST. 2021</span>
+      <h1 class="font-serif text-[52px] leading-[1.02] md:text-[84px] font-semibold mt-6">A Little Pause,<br><em class="text-caramelLight font-medium">A Better Day.</em></h1>
+      <p class="mt-6 text-white/80 text-[16px] md:text-[18px] leading-[1.7] max-w-[560px]">Ruang Seduh adalah ruang untuk berhenti sejenak. Kopi yang diseduh dengan sabar, makanan yang dibuat segar, dan suasana yang membuatmu betah lebih lama.</p>
+      <div class="flex flex-wrap gap-3 mt-9">
+        <a href="#menu" class="bg-caramel hover:bg-[#A66A24] transition text-white px-7 py-3.5 rounded-full font-semibold flex items-center gap-2">Explore Our Menu <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        <a href="#contact" class="bg-white text-espresso px-7 py-3.5 rounded-full font-semibold flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Visit Our Cafe</a>
+      </div>
+      <div class="flex flex-wrap gap-8 mt-12 pt-8 border-t border-white/15">
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center"><i data-lucide="star" class="w-5 h-5 text-caramelLight"></i></div><div><p class="font-serif text-[20px] font-bold leading-none">4.9 / 5.0</p><p class="text-white/60 text-[13px] mt-1">2.400+ Review Pelanggan</p></div></div>
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center"><i data-lucide="coffee" class="w-5 h-5 text-caramelLight"></i></div><div><p class="font-serif text-[20px] font-bold leading-none">50+ Menu</p><p class="text-white/60 text-[13px] mt-1">Coffee, Tea & Kitchen</p></div></div>
+        <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center"><i data-lucide="clock" class="w-5 h-5 text-caramelLight"></i></div><div><p class="font-serif text-[20px] font-bold leading-none">08.00 - 22.00</p><p class="text-white/60 text-[13px] mt-1">Buka Setiap Hari</p></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- MARQUEE STRIP -->
+  <div class="bg-caramel text-white py-3 overflow-hidden"><p class="text-center text-[13px] tracking-[0.18em] font-semibold whitespace-nowrap">SINGLE ORIGIN &nbsp;•&nbsp; FRESHLY BAKED &nbsp;•&nbsp; COZY SPACE &nbsp;•&nbsp; WORK FRIENDLY &nbsp;•&nbsp; PET FRIENDLY</p></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="max-w-7xl mx-auto px-5 py-[80px] grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+  <div class="relative">
+    <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1000&q=80" class="rounded-[28px] h-[520px] w-full object-cover">
+    <div class="absolute -bottom-5 -right-2 md:right-[-20px] bg-white rounded-[20px] shadow-soft p-4 flex items-center gap-3 border border-line">
+      <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center"><i data-lucide="coffee" class="w-6 h-6 text-caramel"></i></div>
+      <div><p class="font-serif font-bold text-[18px] leading-none">Since 2021</p><p class="text-[13px] text-gray-500 mt-1">Disajikan dengan cinta di Solo</p></div>
+    </div>
+    <div class="absolute top-5 left-5 bg-espresso/90 backdrop-blur text-white px-4 py-2.5 rounded-full text-[13px] font-semibold flex items-center gap-2"><i data-lucide="badge-check" class="w-4 h-4 text-caramelLight"></i> 100% Arabica Pilihan</div>
+  </div>
+  <div>
+    <p class="flex items-center gap-2 text-caramel font-bold tracking-[0.2em] text-[12px]"><span class="w-8 h-[2px] bg-caramel inline-block"></span> OUR STORY</p>
+    <h2 class="font-serif text-[40px] md:text-[52px] font-semibold leading-[1.08] mt-4">Bukan Sekadar Cafe.<br>Ini Ruang Untuk <em class="text-terra">Bernapas.</em></h2>
+    <p class="text-[#5F5346] leading-[1.75] mt-6 text-[15.5px]">Berawal dari kecintaan pada kopi rumahan, Ruang Seduh lahir di Solo sebagai tempat untuk melambat. Kami percaya kopi terbaik bukan yang paling mahal, tapi yang diseduh dengan perhatian dan disajikan dengan hangat.</p>
+    <p class="text-[#5F5346] leading-[1.75] mt-3 text-[15.5px]">Setiap cangkir kami racik dari biji pilihan, digiling segar setiap pesanan, dan disajikan di ruang yang dirancang untuk membuatmu nyaman — untuk bekerja, bertemu, atau sekadar sendiri.</p>
+    <div class="grid sm:grid-cols-2 gap-4 mt-8">
+      <div class="bg-white p-5 rounded-[20px] border border-line"><div class="w-11 h-11 rounded-full bg-cream flex items-center justify-center"><i data-lucide="coffee" class="w-5 h-5 text-caramel"></i></div><b class="block mt-3">Quality Coffee</b><p class="text-sm text-gray-500 mt-1 leading-relaxed">Single origin pilihan, grind fresh setiap order.</p></div>
+      <div class="bg-white p-5 rounded-[20px] border border-line"><div class="w-11 h-11 rounded-full bg-cream flex items-center justify-center"><i data-lucide="leaf" class="w-5 h-5 text-sage"></i></div><b class="block mt-3">Fresh Ingredients</b><p class="text-sm text-gray-500 mt-1 leading-relaxed">Bahan segar dari petani dan pasar lokal.</p></div>
+      <div class="bg-white p-5 rounded-[20px] border border-line"><div class="w-11 h-11 rounded-full bg-cream flex items-center justify-center"><i data-lucide="sofa" class="w-5 h-5 text-terra"></i></div><b class="block mt-3">Comfortable Atmosphere</b><p class="text-sm text-gray-500 mt-1 leading-relaxed">Sofa empuk, musik pelan, cahaya hangat.</p></div>
+      <div class="bg-white p-5 rounded-[20px] border border-line"><div class="w-11 h-11 rounded-full bg-cream flex items-center justify-center"><i data-lucide="heart-handshake" class="w-5 h-5 text-caramel"></i></div><b class="block mt-3">Friendly Service</b><p class="text-sm text-gray-500 mt-1 leading-relaxed">Barista yang hafal nama dan pesananmu.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="bg-white py-[80px] border-y border-line">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+      <div><p class="flex items-center gap-2 text-caramel font-bold tracking-[0.2em] text-[12px]"><span class="w-8 h-[2px] bg-caramel inline-block"></span> OUR MENU</p><h2 class="font-serif text-[38px] md:text-[48px] font-semibold leading-tight mt-3">Menu Yang Bikin<br>Kangen Balik Lagi</h2></div>
+      <div class="w-full lg:w-[360px]"><div class="relative"><i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i><input id="searchInput" oninput="renderMenu()" placeholder="Cari menu... misal latte, matcha" class="w-full border border-line rounded-full pl-11 pr-5 py-3.5 bg-ivory text-sm"></div><p class="text-[12px] text-gray-400 mt-2 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5"></i> Harga sudah termasuk pajak. Klik tambah untuk pesan via WhatsApp.</p></div>
+    </div>
+    <div id="filters" class="flex flex-wrap gap-2 mt-9"></div>
+    <div id="menuGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-7"></div>
+    <p id="emptyMenu" class="hide text-center py-14 text-gray-500 flex flex-col items-center gap-2"><i data-lucide="search-x" class="w-8 h-8"></i> Menu tidak ditemukan. Coba kata kunci lain.</p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="max-w-7xl mx-auto px-5 py-[80px]">
+  <div class="flex flex-col md:flex-row justify-between md:items-end gap-4">
+    <div><p class="flex items-center gap-2 text-caramel font-bold tracking-[0.2em] text-[12px]"><span class="w-8 h-[2px] bg-caramel inline-block"></span> GALLERY</p><h2 class="font-serif text-[38px] md:text-[48px] font-semibold mt-3">Rasakan Suasananya</h2></div>
+    <p class="text-gray-500 text-[15px] max-w-[340px] leading-relaxed">Interior hangat, proses seduh yang detail, dan momen-momen kecil yang bikin Ruang Seduh terasa seperti rumah kedua.</p>
+  </div>
+  <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-10"></div>
+</section>
+
+<!-- TESTIMONI SINGKAT -->
+<section class="bg-cream py-[64px]">
+  <div class="max-w-5xl mx-auto px-5 text-center">
+    <div class="flex justify-center gap-1 text-caramel"><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i></div>
+    <p class="font-serif text-[26px] md:text-[32px] leading-[1.35] font-medium mt-5">“Tempat paling nyaman buat kerja di Solo. Kopinya konsisten enak, staff-nya ramah banget, dan suasananya bikin betah berjam-jam.”</p>
+    <p class="mt-4 text-sm font-semibold">— Putri Ayu, Regular Customer</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="bg-espresso text-ivory py-[80px]">
+  <div class="max-w-7xl mx-auto px-5 grid lg:grid-cols-2 gap-12">
+    <div>
+      <p class="flex items-center gap-2 text-caramelLight font-bold tracking-[0.2em] text-[12px]"><span class="w-8 h-[2px] bg-caramelLight inline-block"></span> VISIT OUR CAFE</p>
+      <h2 class="font-serif text-[40px] md:text-[52px] font-semibold mt-4 leading-[1.08]">Mampir Hari Ini.<br>Kami Sudah Seduh.</h2>
+      <p class="text-white/70 mt-5 leading-relaxed max-w-[480px]">Datang langsung, atau pesan dulu lewat WhatsApp biar tinggal ambil. Kami tunggu di meja favoritmu.</p>
+      <div class="space-y-4 mt-9 text-[15px]">
+        <p class="flex gap-3"><i data-lucide="map-pin" class="w-5 h-5 text-caramelLight shrink-0"></i><span><b>Alamat</b><br><span id="addr" class="text-white/70"></span></span></p>
+        <p class="flex gap-3"><i data-lucide="clock" class="w-5 h-5 text-caramelLight shrink-0"></i><span><b>Jam Buka</b><br><span id="hours" class="text-white/70"></span></span></p>
+        <p class="flex gap-3"><i data-lucide="phone" class="w-5 h-5 text-caramelLight shrink-0"></i><span><b>Telepon / WhatsApp</b><br><span id="phone" class="text-white/70"></span></span></p>
+        <p class="flex gap-3"><i data-lucide="mail" class="w-5 h-5 text-caramelLight shrink-0"></i><span><b>Email</b><br><span id="email" class="text-white/70"></span></span></p>
+        <p class="flex gap-3"><i data-lucide="instagram" class="w-5 h-5 text-caramelLight shrink-0"></i><span><b>Instagram</b><br><span id="ig" class="text-white/70"></span></span></p>
+      </div>
+      <div class="flex flex-wrap gap-3 mt-9">
+        <a id="mapsBtn" target="_blank" class="bg-white text-espresso px-6 py-3.5 rounded-full font-semibold flex items-center gap-2">Buka Google Maps <i data-lucide="navigation" class="w-4 h-4"></i></a>
+        <button onclick="checkoutWA()" class="bg-[#1FA855] text-white px-6 py-3.5 rounded-full font-semibold flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i> Chat WhatsApp</button>
+      </div>
+    </div>
+    <div class="bg-white text-espresso rounded-[28px] p-6 md:p-8 shadow-soft">
+      <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-full bg-cream flex items-center justify-center"><i data-lucide="calendar-check" class="w-5 h-5 text-caramel"></i></div><div><h3 class="font-serif text-[24px] font-semibold leading-none">Reservasi & Pesan</h3><p class="text-sm text-gray-500 mt-1">Form ini langsung membuka WhatsApp.</p></div></div>
+      <label class="text-[13px] font-semibold mt-6 block">Nama Kamu</label><input id="fName" placeholder="Contoh: Andi Pratama" class="w-full border border-line rounded-xl px-4 py-3.5 mt-2 bg-ivory text-[15px]">
+      <label class="text-[13px] font-semibold mt-4 block">Keperluan</label><input id="fMsg" placeholder="Mau pesan apa / reservasi berapa orang?" class="w-full border border-line rounded-xl px-4 py-3.5 mt-2 bg-ivory text-[15px]">
+      <button onclick="sendContactWA()" class="w-full bg-espresso text-white py-4 rounded-xl font-semibold mt-6 flex items-center justify-center gap-2">Kirim via WhatsApp <i data-lucide="send" class="w-4 h-4"></i></button>
+      <p class="text-[12.5px] text-center text-gray-400 mt-4 flex items-center justify-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4"></i> Biasanya dibalas kurang dari 5 menit di jam buka.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-[#150E09] text-white/65 py-12">
+  <div class="max-w-7xl mx-auto px-5 flex flex-col md:flex-row justify-between gap-8">
+    <div class="max-w-[360px]"><div class="flex items-center gap-3"><div class="w-[42px] h-[42px]"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="31" fill="#FAF6EF"/><circle cx="32" cy="32" r="27.5" stroke="#B7792B" stroke-width="1" stroke-dasharray="2 3"/><path d="M20 26h20v12a10 10 0 0 1-10 10h0a10 10 0 0 1-10-10V26Z" fill="#211712"/><path d="M40 28h2.5a4.5 4.5 0 0 1 0 9H40" stroke="#211712" stroke-width="2.2"/><path d="M26 20c0-2 2-2 2-4M32 20c0-2 2-2 2-4" stroke="#B7792B" stroke-width="2" stroke-linecap="round"/><path d="M22 52h20" stroke="#B7792B" stroke-width="2.5" stroke-linecap="round"/><text x="32" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="15" font-weight="700" fill="#FAF6EF">R</text></svg></div><p class="text-white font-serif font-bold text-[18px]">RUANG SEDUH</p></div><p class="text-sm mt-4 leading-relaxed">Ruang untuk berhenti sejenak, menyeruput kopi, dan merasa lebih baik. Disajikan dengan sabar di Solo.</p><div class="flex gap-2 mt-5"><a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center"><i data-lucide="instagram" class="w-4 h-4"></i></a><a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center"><i data-lucide="facebook" class="w-4 h-4"></i></a><a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center"><i data-lucide="music-2" class="w-4 h-4"></i></a></div></div>
+    <div class="flex gap-12 text-sm"><div><p class="text-white font-semibold mb-3">Jelajah</p><p class="leading-[2]">Home<br>About Us<br>Our Menu<br>Gallery<br>Contact</p></div><div><p class="text-white font-semibold mb-3">Kontak</p><p id="footerContact" class="leading-[1.8]"></p></div></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-5"><div class="divider bg-white/10 mt-10"></div><p class="text-center text-xs mt-6">© 2026 Ruang Seduh. All rights reserved. • Dibuat dengan sepenuh hati di Solo.</p></div>
+</footer>
+
+<!-- CART -->
+<div id="cartDrawer" class="hide fixed inset-0 z-[60]"><div class="absolute inset-0 bg-black/50 backdrop-blur-[2px]" onclick="closeCart()"></div>
+  <div class="absolute right-0 top-0 h-full w-full max-w-[440px] bg-white p-6 overflow-y-auto shadow-2xl">
+    <div class="flex justify-between items-center"><h3 class="font-serif text-[24px] font-semibold flex items-center gap-2"><i data-lucide="shopping-bag" class="w-5 h-5"></i> Keranjang Kamu</h3><button onclick="closeCart()" class="w-9 h-9 rounded-full bg-ivory flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+    <div id="cartItems" class="mt-6 space-y-4"></div>
+    <div class="border-t border-line mt-6 pt-4 flex justify-between font-bold text-[16px]"><span>Total</span><span id="cartTotal">Rp 0</span></div>
+    <button onclick="checkoutWA()" class="w-full bg-[#1FA855] text-white py-4 rounded-xl font-bold mt-4 flex items-center justify-center gap-2"><i data-lucide="message-circle" class="w-5 h-5"></i> Checkout via WhatsApp</button>
+    <button onclick="cart=[];renderCart()" class="w-full text-sm text-red-500 font-medium mt-4 flex items-center justify-center gap-1.5"><i data-lucide="trash-2" class="w-4 h-4"></i> Kosongkan Keranjang</button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="hide fixed inset-0 z-[70] bg-black/90 flex items-center justify-center p-4" onclick="this.classList.add('hide')">
+  <img id="lightboxImg" class="max-h-[85vh] max-w-full rounded-2xl object-contain">
+  <button class="absolute top-5 right-6 text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
+</div>
+
+<script>
+let activeCat="Semua", cart=[];
+const cats=["Semua",...new Set(MENU.map(m=>m.cat))];
+function fmt(n){return "Rp "+n.toLocaleString('id-ID')}
+function renderFilters(){document.getElementById('filters').innerHTML=cats.map(c=>`<button onclick="setCat('${c}')" class="chip ${c===activeCat?'active':''} px-5 py-2.5 rounded-full border border-line bg-white text-sm font-semibold">${c}</button>`).join('')}
+function setCat(c){activeCat=c;renderFilters();renderMenu()}
+function renderMenu(){
+  const q=(document.getElementById('searchInput').value||"").toLowerCase();
+  const list=MENU.filter(m=>(activeCat==="Semua"||m.cat===activeCat)&&(m.name.toLowerCase().includes(q)||m.desc.toLowerCase().includes(q)));
+  document.getElementById('emptyMenu').classList.toggle('hide',list.length>0);
+  document.getElementById('menuGrid').innerHTML=list.map(m=>`
+  <article class="card bg-ivory rounded-[22px] overflow-hidden border border-line">
+    <div class="relative h-[200px] overflow-hidden"><img src="${m.img}" class="w-full h-full object-cover"><span class="absolute top-3 left-3 bg-white/95 backdrop-blur text-[11px] font-bold px-3 py-1.5 rounded-full tracking-wide">${m.cat.toUpperCase()}</span>${m.tag?`<span class="absolute top-3 right-3 bg-caramel text-white text-[11px] font-bold px-3 py-1.5 rounded-full">${m.tag}</span>`:''}</div>
+    <div class="p-5"><div class="flex justify-between gap-3 items-start"><h3 class="font-serif font-semibold text-[19px] leading-tight">${m.name}</h3><b class="text-caramel whitespace-nowrap text-[16px]">${fmt(m.price)}</b></div><p class="text-[14px] text-gray-500 mt-2 leading-relaxed">${m.desc}</p>
+    <button onclick="addToCart(${MENU.indexOf(m)})" class="w-full mt-5 bg-espresso hover:bg-espresso2 transition text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> Tambah • Order via WA</button></div>
+  </article>`).join('');
+  lucide.createIcons();
+}
+function renderGallery(){document.getElementById('galleryGrid').innerHTML=GALLERY.map(g=>`<img onclick="openLightbox('${g}')" src="${g}" class="w-full h-[200px] md:h-[260px] object-cover rounded-[18px] cursor-pointer hover:opacity-90 transition">`).join('')}
+function openLightbox(src){document.getElementById('lightboxImg').src=src;document.getElementById('lightbox').classList.remove('hide')}
+function addToCart(idx){let f=cart.find(x=>x.idx===idx); if(f) f.qty++; else cart.push({idx,qty:1}); renderCart(); openCart()}
+function renderCart(){
+  document.getElementById('cartCount').innerText=cart.reduce((a,b)=>a+b.qty,0);
+  let total=0;
+  document.getElementById('cartItems').innerHTML=cart.length?cart.map((c,i)=>{let m=MENU[c.idx]; total+=m.price*c.qty; return `<div class="flex gap-3 items-center bg-ivory p-3 rounded-2xl border border-line"><img src="${m.img}" class="w-16 h-16 rounded-xl object-cover"><div class="flex-1 min-w-0"><b class="text-[14px] block truncate">${m.name}</b><p class="text-[13px] text-gray-500">${fmt(m.price)} x ${c.qty}</p></div><div class="flex gap-1.5 items-center"><button onclick="cart[${i}].qty--;if(cart[${i}].qty<=0)cart.splice(${i},1);renderCart()" class="w-7 h-7 border border-line bg-white rounded-full flex items-center justify-center"><i data-lucide="minus" class="w-3.5 h-3.5"></i></button><span class="text-sm font-bold w-4 text-center">${c.qty}</span><button onclick="cart[${i}].qty++;renderCart()" class="w-7 h-7 border border-line bg-white rounded-full flex items-center justify-center"><i data-lucide="plus" class="w-3.5 h-3.5"></i></button></div></div>`}).join(''):`<div class="text-center text-gray-400 py-10"><i data-lucide="shopping-basket" class="w-10 h-10 mx-auto"></i><p class="mt-3">Keranjang masih kosong.<br>Pilih menu dulu yuk.</p></div>`;
+  document.getElementById('cartTotal').innerText=fmt(total); lucide.createIcons();
+}
+function openCart(){document.getElementById('cartDrawer').classList.remove('hide');renderCart()}
+function closeCart(){document.getElementById('cartDrawer').classList.add('hide')}
+function checkoutWA(){if(!cart.length){alert("Pilih menu dulu ya!");return} let msg="Halo Ruang Seduh! Saya mau pesan:%0A"; cart.forEach(c=>{let m=MENU[c.idx]; msg+=`- ${m.name} x${c.qty} (${fmt(m.price)})%0A`}); let total=cart.reduce((a,b)=>a+MENU[b.idx].price*b.qty,0); msg+=`%0ATotal: ${fmt(total)}%0AAtas nama: `; window.open(`https://wa.me/${CAFE.wa}?text=${msg}`,'_blank')}
+function sendContactWA(){let n=document.getElementById('fName').value||"Teman Seduh"; let m=document.getElementById('fMsg').value||"Halo, saya mau tanya info cafe."; window.open(`https://wa.me/${CAFE.wa}?text=Halo Ruang Seduh! Saya ${encodeURIComponent(n)}.%0A${encodeURIComponent(m)}`,'_blank')}
+document.getElementById('addr').innerText=CAFE.address;
+document.getElementById('hours').innerText=CAFE.hours;
+document.getElementById('phone').innerText="+62 812-3456-7890";
+document.getElementById('email').innerText=CAFE.email;
+document.getElementById('ig').innerText=CAFE.ig;
+document.getElementById('mapsBtn').href=CAFE.maps;
+document.getElementById('footerContact').innerHTML=CAFE.address+"<br>"+CAFE.hours+"<br>"+CAFE.email;
+renderFilters(); renderMenu(); renderGallery(); renderCart(); lucide.createIcons();
+</script>
+</body>
+</html>
