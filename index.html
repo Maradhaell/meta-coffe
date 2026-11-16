@@ -30,7 +30,7 @@ input,textarea{outline:none} input:focus{border-color:#B7792B!important;box-shad
 <body>
 
 <script>
-const CAFE={name:"RUANG SEDUH",wa:"6281234567890",address:"Jl. Slamet Riyadi No. 88, Solo, Jawa Tengah",hours:"Senin - Minggu • 08.00 - 22.00 WIB",email:"halo@ruangseduh.id",ig:"@ruangseduh",maps:"https://maps.google.com/?q=Solo"};
+const CAFE={name:"RUANG SEDUH",wa:"62895406673684",address:"Jl. Slamet Riyadi No. 88, Solo, Jawa Tengah",hours:"Senin - Minggu • 08.00 - 22.00 WIB",email:"halo@ruangseduh.id",ig:"@ruangseduh",maps:"https://maps.google.com/?q=Solo"};
 const MENU=[
 {name:"Espresso",cat:"Coffee",price:18000,desc:"Single shot pekat, bold dan clean dengan crema tebal.",img:"https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=900&q=80",tag:"Best Seller"},
 {name:"Cappuccino",cat:"Coffee",price:28000,desc:"Espresso, steamed milk dan foam lembut yang seimbang.",img:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=900&q=80",tag:"Favorit"},
@@ -266,7 +266,7 @@ function checkoutWA(){if(!cart.length){alert("Pilih menu dulu ya!");return} let 
 function sendContactWA(){let n=document.getElementById('fName').value||"Teman Seduh"; let m=document.getElementById('fMsg').value||"Halo, saya mau tanya info cafe."; window.open(`https://wa.me/${CAFE.wa}?text=Halo Ruang Seduh! Saya ${encodeURIComponent(n)}.%0A${encodeURIComponent(m)}`,'_blank')}
 document.getElementById('addr').innerText=CAFE.address;
 document.getElementById('hours').innerText=CAFE.hours;
-document.getElementById('phone').innerText="+62 812-3456-7890";
+document.getElementById('phone').innerText="+62 895-4066-73684";
 document.getElementById('email').innerText=CAFE.email;
 document.getElementById('ig').innerText=CAFE.ig;
 document.getElementById('mapsBtn').href=CAFE.maps;
